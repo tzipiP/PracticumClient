@@ -1,0 +1,123 @@
+
+<form (ngSubmit)="save();myForm.reset()" #myForm="ngForm">
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label for="fName" name="fName">first name</mat-label>
+            <input matInput name="fName" id="fName" placeholder="enter your last name" [(ngModel)]="userService.currentUser.firstName"
+                required #fname='ngModel'>
+            <mat-icon matSuffix class="material-icons">sentiment_very_satisfied</mat-icon>
+            <mat-hint *ngIf="fname.touched&&fname.errors&&fname.errors.required">first name is required</mat-hint>
+        </mat-form-field>
+    </div>
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label for="lName" name="lName">last name</mat-label>
+            <input matInput name="lName" id="lName" placeholder="enter your first name" [(ngModel)]="userService.currentUser.lastName"
+                required #lname='ngModel'>
+            <mat-icon matSuffix class="material-icons">sentiment_very_satisfied</mat-icon>
+            <mat-hint *ngIf="lname.touched&&fname.errors&&lname.errors.required">first name is required</mat-hint>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label for="id" name="id">identity</mat-label>
+            <input matInput name="id" id="id" placeholder="enter your identity" [(ngModel)]="userService.currentUser.identityNumber" required
+                #iden='ngModel' minlength="9" maxlength="9">
+            <mat-icon matSuffix class="material-icons">sentiment_very_satisfied</mat-icon>
+            <mat-hint *ngIf="iden.touched&&iden.errors&&iden.errors.required">identity number is required</mat-hint>
+            <mat-hint *ngIf="iden.touched&&iden.errors?.minlength">identity number must be
+                {{iden.errors.minlength.requiredLength}} digits!! you entered only
+                {{iden.errors.minlength.actualLength}}
+                digits!!</mat-hint>
+        </mat-form-field>
+    </div>
+
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label for="bd" name="bd">born date</mat-label>
+            <input matInput name="bd" id="bd" placeholder="enter your born date" [(ngModel)]="userService.currentUser.bornDate" required
+                #bd='ngModel' type="date">
+            <mat-icon matSuffix class="material-icons">sentiment_very_satisfied</mat-icon>
+            <mat-hint *ngIf="bd.touched&&bd.errors&&bd.errors.required">born date is required</mat-hint>
+        </mat-form-field>
+
+    </div>
+    <div>
+        <mat-form-field appearance="outline">
+            <mat-label for="g1" for="g2" name="gender" [(ngModel)]="userService.currentUser.gender" #g='ngModel' ngDefaultControl>choose
+                your gender</mat-label>
+            <input matInput name="gender" id="g" placeholder="" [(ngModel)]="userService.currentUser.gender" required #bd='ngModel'>
+            <mat-radio-group aria-label="Select an option" name="gender" for="g1" for="g2" [(ngModel)]="userService.currentUser.gender"
+                aria-required="true">
+                <mat-radio-button id="g1" name="gender" value="1">male</mat-radio-button>
+                <mat-radio-button id="g2" name="gender" value="2">female</mat-radio-button>
+            </mat-radio-group>
+            <mat-icon matSuffix class="material-icons">sentiment_very_satisfied</mat-icon>
+            <mat-hint *ngIf="g.touched&&g.errors&&g.errors.required">choosing your gender is required</mat-hint>
+        </mat-form-field>
+
+    </div>
+    <div>
+        <mat-form-field appearance="fill">
+            <mat-label>health fund</mat-label> 
+            <mat-select [(ngModel)]="userService.currentUser.healthFund" name="hmo" required #g='ngModel'>
+                <mat-option *ngFor="let x of healthFund" [value]="x.code">
+                    {{x.name}}
+                </mat-option>
+            </mat-select>
+            <mat-hint *ngIf="g.touched&&g.errors&&g.errors.required">choosing your gender is required</mat-hint>
+        </mat-form-field>
+    </div>
+
+
+    <div *ngIf="myForm.valid">
+        <input  type="button" (click)="isAddChild=true" value="to add a child click me:)">
+    </div>
+
+    <form *ngIf="myForm.valid" (ngSubmit)="addChild();myForm2.reset()" #myForm2="ngForm">
+        <div *ngIf="isAddChild">
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label for="name" name="name">name</mat-label>
+                    <input matInput name="name" id="name" placeholder="enter your name" [(ngModel)]="userService.currentChild.name"
+                        required #name='ngModel'>
+                    <mat-icon matSuffix class="material-icons">sentiment_very_satisfied</mat-icon>
+                    <mat-hint *ngIf="name.touched&&name.errors&&name.errors.required">first name is required
+                    </mat-hint>
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label for="bd2" name="bd">born date</mat-label>
+                    <input matInput name="bd2" id="bd2" placeholder="enter your born date" [(ngModel)]="userService.currentChild.bornDate"
+                        required #bd2='ngModel' type="date">
+                    <mat-icon matSuffix class="material-icons">sentiment_very_satisfied</mat-icon>
+                    <mat-hint *ngIf="bd2.touched&&bd2.errors&&bd2.errors.required">born date is required</mat-hint>
+                </mat-form-field>
+            </div>
+
+            <div>
+                <mat-form-field appearance="outline">
+                    <mat-label for="idC" name="idC">identity</mat-label>
+                    <input matInput name="idC" id="idC" placeholder="enter your identity" [(ngModel)]="userService.currentChild.identityNumber"
+                        required #idenC='ngModel' minlength="9" maxlength="9">
+                    <mat-icon matSuffix class="material-icons">sentiment_very_satisfied</mat-icon>
+                    <mat-hint *ngIf="idenC.touched&&idenC.errors&&idenC.errors.required">identity number is required
+                    </mat-hint>
+                    <mat-hint *ngIf="idenC.touched&&idenC.errors?.minlength">identity number must be
+                        {{idenC.errors.minlength.requiredLength}} digits!! you entered only
+                        {{idenC.errors.minlength.actualLength}}
+                        digits!!</mat-hint>
+                </mat-form-field>
+            </div>
+            <button mat-fab extended color="accent" style="width:5%" name="sub2" type="submit"
+                [disabled]="!myForm2.valid" value="add to my children!!">
+                <mat-icon>favorite</mat-icon>
+                add me->
+            </button>
+
+        </div>
+    </form>
+    <input name="sub" type="submit" [disabled]="!myForm.valid&&!isAddChild" />
+</form>
